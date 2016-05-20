@@ -1,5 +1,7 @@
+import visualizer.MainWindow;
+
 public class Application {
     public static void main(String[] args) {
-        System.out.println("hoge");
+        MainWindow window = new MainWindow();
     }
 }

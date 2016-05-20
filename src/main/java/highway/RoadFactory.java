@@ -15,19 +15,16 @@ import java.util.List;
 public class RoadFactory {
 
     public Road Construct(RoadComponentConfig[] configs) {
-        List<RoadComponent> components = new ArrayList<RoadComponent>();
         try {
-            RoadComponent prevRoad = RoadComponent.createStartPoint(configs[0], configs[1]);
+            Road road = new Road(configs[0]);
 
             // 最初の１つは始点として特別な方法で生成される
             // 最後の１つは次のコンポーネントがないためそこが端点となる
             for (int i = 1; i < configs.length - 1; i++) {
-                RoadComponentConfig current = configs[i];
-                RoadComponent component = prevRoad.getNextComponent(current);
-                components.add(component);
+                road.append(configs[i]);
             }
 
-            return new Road(components);
+            return road;
         } catch (Exception e) {
             return null;
         }

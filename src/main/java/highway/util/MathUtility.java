@@ -17,9 +17,12 @@ public class MathUtility {
         return a;
     }
 
-    /////////////////////////////////////////////////////////
-
-    ////////////////////////////////////////////////////////////
-//クロソイド曲線データの計算
+    public static double fact(double value) {
+        double count = value;
+        for (int i = 2; i < count; i++) {
+            value *= i;
+        }
+        return value;
+    }
 
 }

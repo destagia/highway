@@ -1,5 +1,7 @@
 package highway.model;
 
+import highway.config.RoadComponentConfig;
+
 import java.util.List;
 
 /**
@@ -8,7 +10,14 @@ import java.util.List;
  */
 public class Road {
 
-    public Road(List<RoadComponent> components) {
+    private RoadComponent firstComponent;
+    private RoadComponent lastComponent;
 
+    public Road(RoadComponentConfig startPointConfig) {
+        lastComponent = firstComponent;
+    }
+
+    public void append(RoadComponentConfig config) {
+        lastComponent.setNextByConfig(config);
     }
 }

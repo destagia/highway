@@ -14,8 +14,8 @@ public class Vector2 {
     public static final Vector2 Down = new Vector2(0, -1);
     public static final Vector2 Left = new Vector2(-1, 0);
 
-    private double x;
-    private double y;
+    private final double x;
+    private final double y;
 
     public Vector2(double x, double y) {
         this.x = x;

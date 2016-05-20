@@ -1,52 +1,58 @@
 package highway.model;
 
 import highway.config.RoadComponentConfig;
-import highway.util.Point;
+import highway.util.Clothoid;
+import highway.util.Fragment;
+import highway.util.MathUtility;
 import highway.util.Vector2;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
- * 道路のモデルとなるクラス
- * モデルクラスは数種類しかなく、それらを元に１つの高速道路を構築する
  * Created by shohei.miyashita on 5/19/16.
  */
 public class RoadComponent {
 
-    public double length;
-    public double gradient;
+    private RoadComponentConfig config;
 
-    public Point startPoint;
-    public Point endPoint;
-
-    private RoadComponent() {
+    private RoadComponent(Fragment prevComponentTerminal) {
+        originFragment = prevComponentTerminal;
+        terminalFragment = prevComponentTerminal;
     }
 
-    public static RoadComponent createStartPoint(RoadComponentConfig config, RoadComponentConfig next) {
-        RoadComponent component = new RoadComponent();
-        component.length = config.length;
-        component.startPoint = new Point(Vector2.Zero, 0, config.width);
-        component.endPoint = component.startPoint.getLinearForwarded(next.length);
-        return component;
+    private Fragment originFragment;
+    private Fragment terminalFragment;
+
+    public Vector2 getOrigin() {
+        return originFragment.position;
     }
 
-    public RoadComponent getNextComponent(RoadComponentConfig nextConfig) throws Exception {
-        RoadComponent nextComponent = new RoadComponent();
-        nextComponent.length = nextConfig.length;
-        nextComponent.startPoint = this.endPoint;
-        nextComponent.endPoint = nextComponent.getEndPointByShape(nextConfig);
-        return nextComponent;
-    }
+    private RoadComponent next;
 
-    private Point getEndPointByShape(RoadComponentConfig nextConfig) throws Exception {
-        // TODO 場合分けの返り値をちゃんとする
-        switch (nextConfig.shape) {
-            case "Line":
-                return startPoint.getLinearForwarded(nextConfig.length);
-            case "Circle":
-                return startPoint.getLinearForwarded(nextConfig.length);
-            case "Clothoid":
-                return startPoint.getLinearForwarded(nextConfig.length);
-            default:
-                throw new Exception("");
+    public void setNextByConfig(RoadComponentConfig config) throws RuntimeException {
+        next = new RoadComponent(terminalFragment);
+        next.config = config;
+        if (config.shape.equals("Line")) {
+            next.CreateLine();
+        } else if (config.shape.equals("Clothoid")) {
+            next.CreateClothoid();
+        } else {
+            throw new RuntimeException("Unknown shape : " + config.shape);
         }
+    }
+
+    private void CreateClothoid() {
+        Clothoid clothoid = new Clothoid(config.length, config.circleRadius);
+        for (Vector2 position = clothoid.next(); clothoid.hasNext();) {
+            terminalFragment.setNext(new Fragment(originFragment.position.add(position)));
+            terminalFragment = terminalFragment.getNext();
+        }
+    }
+
+    private void CreateLine() {
+        double theta = originFragment.getPrev() == null ? 0.0 : originFragment.getPrev().getForwardToNext().getTheta();
+        Fragment fragment = new Fragment(getOrigin().getForword(config.length, theta));
+        terminalFragment.setNext(fragment);
     }
 }
