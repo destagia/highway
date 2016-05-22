@@ -1,5 +1,9 @@
 package highway.editor;
 
+import highway.editor.panel.ClothoidEditorPanel;
+import highway.editor.panel.EditorPanel;
+import highway.editor.panel.LineEditorPanel;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -17,6 +21,7 @@ public class MainWindow implements Repainter {
 
     private EditorPanel editorPanel;
     private LineEditorPanel lineEditorPanel;
+    private ClothoidEditorPanel clothoidEditorPanel;
 
     private MapPanel mapPanel;
 
@@ -37,6 +42,7 @@ public class MainWindow implements Repainter {
 
         editorPanel = new EditorPanel();
         lineEditorPanel = new LineEditorPanel(controller, this);
+        clothoidEditorPanel = new ClothoidEditorPanel(controller, this);
 
         splitPane.setRightComponent(mapPanel);
 
@@ -44,6 +50,13 @@ public class MainWindow implements Repainter {
             @Override
             public void actionPerformed(ActionEvent e) {
                 setContentPane(lineEditorPanel);
+            }
+        });
+
+        editorPanel.addActionListener("Clothoid", new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                setContentPane(clothoidEditorPanel);
             }
         });
 

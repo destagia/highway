@@ -1,4 +1,4 @@
-package highway.editor;
+package highway.editor.panel;
 
 import javax.swing.*;
 import java.awt.*;

@@ -45,11 +45,11 @@ public class Vector2 {
         return Math.sqrt(x * x + y * y);
     }
 
-    public Vector2 add(Vector2 other) {
+    public Vector2 plus(Vector2 other) {
         return new Vector2(this.x + other.x, this.y + other.y);
     }
 
-    public Vector2 subtract(Vector2 other) {
+    public Vector2 minus(Vector2 other) {
         return new Vector2(this.x - other.x, this.y - other.y);
     }
 
@@ -59,6 +59,16 @@ public class Vector2 {
 
     public double dot(Vector2 other) {
         return this.x * other.x + this.y * other.y;
+    }
+
+    public Vector2 getRotated(double rotation)
+    {
+        rotation = -rotation / 180 * Math.PI;
+        double cosθ = Math.cos(rotation);
+        double sinθ = Math.sin(rotation);
+        double x = this.x * cosθ - this.y * sinθ;
+        double y = this.x * sinθ + this.y * cosθ;
+        return new Vector2(x, y);
     }
 
     /**

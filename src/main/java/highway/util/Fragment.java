@@ -24,7 +24,7 @@ public class Fragment {
     public void setNext(Fragment next) {
         this.next = next;
         this.next.prev = this;
-        forwardToNext = next.position.subtract(position);
+        forwardToNext = next.position.minus(position);
     }
 
     public Fragment(Vector2 position) {

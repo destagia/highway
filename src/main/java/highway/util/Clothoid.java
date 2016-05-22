@@ -26,7 +26,7 @@ public class Clothoid {
         final double A = Math.sqrt(targetRadius * targetLength);
 
         if (l <= targetLength) {
-            l += 0.01;
+            l += 0.1;
 
             double r = A * A / l;
             double τ = l / (2 * r);

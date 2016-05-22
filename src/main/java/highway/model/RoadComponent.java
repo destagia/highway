@@ -41,7 +41,7 @@ public class RoadComponent {
     private void CreateClothoid() {
         Clothoid clothoid = new Clothoid(config.length, config.circleRadius);
         for (Vector2 position = clothoid.next(); clothoid.hasNext();) {
-            terminalFragment.setNext(new Fragment(originFragment.position.add(position)));
+            terminalFragment.setNext(new Fragment(originFragment.position.plus(position)));
             terminalFragment = terminalFragment.getNext();
         }
     }
