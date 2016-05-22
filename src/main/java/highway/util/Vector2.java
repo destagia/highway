@@ -1,7 +1,5 @@
 package highway.util;
 
-import java.util.Vector;
-
 /**
  * 平面座標を表現するクラス
  * Created by shohei.miyashita on 5/20/16.

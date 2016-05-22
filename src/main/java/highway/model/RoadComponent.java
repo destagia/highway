@@ -3,11 +3,7 @@ package highway.model;
 import highway.config.RoadComponentConfig;
 import highway.util.Clothoid;
 import highway.util.Fragment;
-import highway.util.MathUtility;
 import highway.util.Vector2;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by shohei.miyashita on 5/19/16.
