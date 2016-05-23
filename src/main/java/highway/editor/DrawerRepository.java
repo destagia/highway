@@ -16,8 +16,16 @@ public class DrawerRepository {
         return drawers;
     }
 
-    public void setCurrentIndex(int index) {
-        currentIndex = index;
+    public void forwardCurrentIndex() {
+        if (currentIndex < drawers.size()) {
+            currentIndex += 1;
+        }
+    }
+
+    public void backwardCurrentIndex() {
+        if (currentIndex > 1) {
+            currentIndex -= 1;
+        }
     }
 
     public int getCurrentIndex() {
@@ -29,7 +37,7 @@ public class DrawerRepository {
             drawers.set(currentIndex, drawer);
         } else {
             drawers.add(drawer);
-            currentIndex = drawers.size() - 1;
+            currentIndex = drawers.size();
         }
     }
 }

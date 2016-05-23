@@ -17,9 +17,11 @@ public class MapPanel extends JPanel {
     @Override
     public void paint(Graphics graphics) {
         Graphics2D graphics2D = (Graphics2D)graphics;
+        /*
         graphics2D.setRenderingHint(
                 RenderingHints.KEY_ANTIALIASING,
                 RenderingHints.VALUE_ANTIALIAS_ON);
+                */
 
         controller.onPaint(graphics2D);
     }

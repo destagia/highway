@@ -48,7 +48,7 @@ public class RoadComponent {
 
     private void CreateLine() {
         double theta = originFragment.getPrev() == null ? 0.0 : originFragment.getPrev().getForwardToNext().getTheta();
-        Fragment fragment = new Fragment(getOrigin().getForword(config.length, theta));
+        Fragment fragment = new Fragment(getOrigin().getForward(config.length, theta));
         terminalFragment.setNext(fragment);
     }
 }

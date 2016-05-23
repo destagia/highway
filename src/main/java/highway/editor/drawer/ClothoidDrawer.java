@@ -17,14 +17,18 @@ public class ClothoidDrawer extends Drawer {
     }
 
     @Override
-    protected void draw(int originX, int originY) {
+    protected double draw(int originX, int originY) {
         Clothoid clothoid = new Clothoid(radius, length);
-        Vector2 prevPoint = new Vector2(originX, originY);
+        Vector2 prevPoint = Vector2.ZERO;
 
         while (clothoid.hasNext()) {
             Vector2 point = clothoid.next();
             drawLine((int)prevPoint.getX() + originX, (int)prevPoint.getY() + originY, (int)point.getX() + originX, (int)point.getY() + originY);
             prevPoint = point;
         }
+
+        Vector2 additional = clothoid.next();
+
+        return additional.minus(prevPoint).getTheta();
     }
 }

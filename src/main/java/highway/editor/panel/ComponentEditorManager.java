@@ -1,12 +1,8 @@
 package highway.editor.panel;
 
 import highway.editor.MainWindow;
-import highway.editor.MapController;
-import highway.editor.Repainter;
-import highway.editor.SwingHelper;
 
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 

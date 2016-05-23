@@ -12,11 +12,13 @@ public abstract class Drawer {
 
     private ArrayList<Path> paths = new ArrayList<Path>();
 
-    public Vector2 draw(Graphics2D graphics2D, int x, int y, double rotation) {
+    public Terminal draw(Graphics2D graphics2D, int x, int y, double rotation) {
         Vector2 origin = new Vector2(x, y);
         Vector2 terminal = origin;
 
-        draw(x, y);
+        System.out.println(rotation);
+
+        double nextRotation = draw(x, y) + rotation;
 
         for (Path path : paths) {
             Vector2 from = origin.plus(path.getOrigin().minus(origin).getRotated(rotation));
@@ -24,6 +26,7 @@ public abstract class Drawer {
             int fromY = (int)from.getY();
 
             Vector2 to = origin.plus(path.getDestination().minus(origin).getRotated(rotation));
+
             int toX = (int)to.getX();
             int toY = (int)to.getY();
 
@@ -32,14 +35,14 @@ public abstract class Drawer {
             terminal = to;
         }
 
-        return terminal;
+        return new Terminal(terminal, nextRotation);
     }
 
     protected void drawLine(int fromX, int fromY, int toX, int toY) {
         paths.add(new Path(fromX, fromY, toX, toY));
     }
 
-    protected abstract void draw(int originX, int originY);
+    protected abstract double draw(int originX, int originY);
 
     private class Path {
         private Vector2 origin;

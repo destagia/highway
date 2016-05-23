@@ -25,38 +25,34 @@ public class Clothoid {
 
         final double A = Math.sqrt(targetRadius * targetLength);
 
-        if (l <= targetLength) {
-            l += 0.1;
+        l += 5;
 
-            double r = A * A / l;
-            double τ = l / (2 * r);
+        double r = A * A / l;
+        double τ = l / (2 * r);
 
-            double x = 1;
-            double prefix = -1;
-            for (int k = 2; k < 100; k += 2) {
-                double delta = (1.0 / (MathUtility.fact(k) * (k * 2.0 + 1.0))) * Math.pow(τ, k);
-                delta *= prefix;
-                prefix *= -1;
-                x += delta;
-            }
-
-            x *= A * Math.sqrt(2 * τ);
-
-            double y = 1.0 / 3.0;
-            prefix = -1;
-            for (int k = 2; k < 100; k += 2) {
-                double delta = (1.0 / (MathUtility.fact(k + 1.0) * ((k + 1.0) * 2.0 + 1.0))) * Math.pow(τ, k);
-                delta *= prefix;
-                prefix *= -1;
-                y += delta;
-            }
-
-            y *= -A * τ * Math.sqrt(2 * τ);
-
-            return new Vector2(x, y);
+        double x = 1;
+        double prefix = -1;
+        for (int k = 2; k < 100; k += 2) {
+            double delta = (1.0 / (MathUtility.fact(k) * (k * 2.0 + 1.0))) * Math.pow(τ, k);
+            delta *= prefix;
+            prefix *= -1;
+            x += delta;
         }
 
-        return null;
+        x *= A * Math.sqrt(2 * τ);
+
+        double y = 1.0 / 3.0;
+        prefix = -1;
+        for (int k = 2; k < 100; k += 2) {
+            double delta = (1.0 / (MathUtility.fact(k + 1.0) * ((k + 1.0) * 2.0 + 1.0))) * Math.pow(τ, k);
+            delta *= prefix;
+            prefix *= -1;
+            y += delta;
+        }
+
+        y *= -A * τ * Math.sqrt(2 * τ);
+
+        return new Vector2(x, y);
     }
 
 }
