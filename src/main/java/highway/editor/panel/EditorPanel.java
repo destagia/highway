@@ -1,7 +1,12 @@
 package highway.editor.panel;
 
+import highway.editor.MapController;
+import highway.editor.MenuSetter;
+import highway.editor.SwingHelper;
+
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 /**
@@ -9,47 +14,27 @@ import java.awt.event.ActionListener;
  */
 public class EditorPanel extends JPanel {
 
-    private String mode;
+    public EditorPanel(final ComponentEditorManager managers[]) {
 
-    private String modeTypes[];
-    private JButton buttons[];
-
-    public EditorPanel() {
-
-        modeTypes = new String[] {
-                "Line",
-                "Clothoid",
-                "Circle"
-        };
-        buttons = new JButton[modeTypes.length];
-
-        mode = modeTypes[0];
+        JButton buttons[] = new JButton[managers.length];
 
         BoxLayout boxlayout = new BoxLayout(this, BoxLayout.Y_AXIS);
 
         this.setLayout(boxlayout);
 
-        for (int i = 0; i < modeTypes.length; i++) {
-            JButton btn = new JButton(modeTypes[i]);
+        for (int i = 0; i < managers.length; i++) {
+            final int index = i;
+            JButton btn = new JButton(managers[i].getName());
             btn.setFont(new Font("Serif", Font.PLAIN, 18));
             buttons[i] = btn;
+            buttons[i].addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    managers[index].go();
+                }
+            });
             this.add(btn);
         }
     }
 
-    public void addActionListener(String mode, ActionListener listener) {
-        int index = indexOfModeTypes(mode);
-        if (index != -1) {
-            buttons[index].addActionListener(listener);
-        }
-    }
-
-    private int indexOfModeTypes(String mode) {
-        for (int i = 0; i < modeTypes.length; i++) {
-            if (modeTypes[i].equals(mode)) {
-                return i;
-            }
-        }
-        return -1;
-    }
 }

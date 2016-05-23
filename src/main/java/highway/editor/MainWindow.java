@@ -1,29 +1,25 @@
 package highway.editor;
 
 import highway.editor.panel.ClothoidEditorPanel;
+import highway.editor.panel.ComponentEditorManager;
 import highway.editor.panel.EditorPanel;
-import highway.editor.panel.LineEditorPanel;
+import highway.editor.panel.LinePanelContainer;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 /**
  * Created by shohei.miyashita on 5/20/16.
  */
-public class MainWindow implements Repainter {
+public class MainWindow implements Repainter, MenuSetter {
     private final Color MENU_BACKGROUND_COLOR = new Color(250, 250, 250);
 
     private JFrame mainFrame;
-
     private JSplitPane splitPane;
 
-    private EditorPanel editorPanel;
-    private LineEditorPanel lineEditorPanel;
-    private ClothoidEditorPanel clothoidEditorPanel;
-
     private MapPanel mapPanel;
+
+    private EditorPanel editorPanel;
 
     public MainWindow() {
         mainFrame = new JFrame();
@@ -40,27 +36,14 @@ public class MainWindow implements Repainter {
 
         mapPanel = new MapPanel(controller);
 
-        editorPanel = new EditorPanel();
-        lineEditorPanel = new LineEditorPanel(controller, this);
-        clothoidEditorPanel = new ClothoidEditorPanel(controller, this);
+        editorPanel = new EditorPanel(new ComponentEditorManager[] {
+                new ComponentEditorManager("直線", this, new LinePanelContainer(controller)),
+                new ComponentEditorManager("クロソイド曲線", this, new LinePanelContainer(controller)),
+        });
 
         splitPane.setRightComponent(mapPanel);
 
-        editorPanel.addActionListener("Line", new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                setContentPane(lineEditorPanel);
-            }
-        });
-
-        editorPanel.addActionListener("Clothoid", new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                setContentPane(clothoidEditorPanel);
-            }
-        });
-
-        setContentPane(editorPanel);
+        setContentPanel(editorPanel);
 
         mainFrame.setContentPane(splitPane);
         mainFrame.setVisible(true);
@@ -71,7 +54,11 @@ public class MainWindow implements Repainter {
         mainFrame.repaint();
     }
 
-    private void setContentPane(Component component)
+    public void backToMenu() {
+        setContentPanel(editorPanel);
+    }
+
+    public void setContentPanel(Component component)
     {
         component.setMaximumSize(new Dimension(300, 1000));
         component.setMinimumSize(new Dimension(100, 1000));
