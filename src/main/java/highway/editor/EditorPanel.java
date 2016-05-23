@@ -1,8 +1,6 @@
-package highway.editor.panel;
+package highway.editor;
 
-import highway.editor.MapController;
-import highway.editor.MenuSetter;
-import highway.editor.SwingHelper;
+import highway.editor.panel.ComponentEditorManager;
 
 import javax.swing.*;
 import java.awt.*;

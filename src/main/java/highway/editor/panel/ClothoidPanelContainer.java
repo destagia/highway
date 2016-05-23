@@ -12,14 +12,16 @@ import java.awt.event.ActionListener;
 /**
  * Created by shohei.miyashita on 5/21/16.
  */
-public class LinePanelContainer implements ComponentEditor {
-
-    private JPanel panel;
-    private JTextField lengthField;
+public class ClothoidPanelContainer implements ComponentEditor {
 
     private MapController controller;
 
-    public LinePanelContainer(MapController controller) {
+    private JPanel panel;
+
+    private JTextField radiusField;
+    private JTextField lengthField;
+
+    public ClothoidPanelContainer(final MapController controller) {
         this.controller = controller;
 
         panel = new JPanel();
@@ -31,6 +33,11 @@ public class LinePanelContainer implements ComponentEditor {
 
         lengthField = SwingHelper.createTextField();
         panel.add(lengthField);
+
+        panel.add(new JLabel("半径"));
+
+        radiusField = SwingHelper.createTextField();
+        panel.add(radiusField);
     }
 
     public void add(Component component) {
@@ -43,6 +50,7 @@ public class LinePanelContainer implements ComponentEditor {
 
     public void onApply() {
         int length = Integer.parseInt(lengthField.getText());
-        controller.drawLine(length);
+        int radius = Integer.parseInt(radiusField.getText());
+        controller.drawClothoid(radius, length);
     }
 }

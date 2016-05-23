@@ -1,8 +1,7 @@
 package highway.editor;
 
-import highway.editor.panel.ClothoidEditorPanel;
+import highway.editor.panel.ClothoidPanelContainer;
 import highway.editor.panel.ComponentEditorManager;
-import highway.editor.panel.EditorPanel;
 import highway.editor.panel.LinePanelContainer;
 
 import javax.swing.*;
@@ -11,7 +10,7 @@ import java.awt.*;
 /**
  * Created by shohei.miyashita on 5/20/16.
  */
-public class MainWindow implements Repainter, MenuSetter {
+public class MainWindow implements Repainter {
     private final Color MENU_BACKGROUND_COLOR = new Color(250, 250, 250);
 
     private JFrame mainFrame;
@@ -38,7 +37,7 @@ public class MainWindow implements Repainter, MenuSetter {
 
         editorPanel = new EditorPanel(new ComponentEditorManager[] {
                 new ComponentEditorManager("直線", this, new LinePanelContainer(controller)),
-                new ComponentEditorManager("クロソイド曲線", this, new LinePanelContainer(controller)),
+                new ComponentEditorManager("クロソイド曲線", this, new ClothoidPanelContainer(controller)),
         });
 
         splitPane.setRightComponent(mapPanel);
@@ -58,14 +57,12 @@ public class MainWindow implements Repainter, MenuSetter {
         setContentPanel(editorPanel);
     }
 
-    public void setContentPanel(Component component)
-    {
+    public void setContentPanel(Component component) {
         component.setMaximumSize(new Dimension(300, 1000));
         component.setMinimumSize(new Dimension(100, 1000));
         component.setPreferredSize(new Dimension(200, 1000));
         component.setBackground(MENU_BACKGROUND_COLOR);
         splitPane.setLeftComponent(component);
     }
-
 
 }
