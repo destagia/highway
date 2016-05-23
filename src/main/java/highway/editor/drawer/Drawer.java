@@ -16,8 +16,6 @@ public abstract class Drawer {
         Vector2 origin = new Vector2(x, y);
         Vector2 terminal = origin;
 
-        System.out.println(rotation);
-
         double nextRotation = draw(x, y) + rotation;
 
         for (Path path : paths) {

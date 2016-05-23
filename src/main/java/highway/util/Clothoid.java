@@ -49,11 +49,15 @@ public class Clothoid {
     private Vector2 internalNext() {
         final double A = Math.sqrt(targetRadius * targetLength);
 
+        boolean hasNext = hasNext();
+
         head();
 
-        if (!hasNext() && !isUpType()) {
+        if (!hasNext && !isUpType()) {
             Vector2 forward = last1Position.minus(last2Position).getNormalized();
-            return last1Position.plus(forward.multiply(Math.abs(l)));
+            last2Position = last1Position;
+            last1Position = last2Position.plus(forward.multiply(Math.abs(l)));
+            return last1Position;
         }
 
         double r = A * A / l;
@@ -100,7 +104,16 @@ public class Clothoid {
 
     public double getNextTheta() {
         next();
-        return last1Position.minus(last2Position).getTheta();
+        double theta = last1Position.minus(last2Position).getTheta();
+        if (type == Type.RightUp) {
+            return -theta;
+        } else if (type == Type.LeftDown) {
+            return theta - rotation;
+        } else if (type == Type.RightDown) {
+            return -theta + rotation;
+        } else {
+            return theta;
+        }
     }
 
     private boolean shouldBeFlipOnY() {

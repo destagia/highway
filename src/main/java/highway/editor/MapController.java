@@ -26,7 +26,6 @@ public class MapController {
             Vector2 origin = terminal.position;
             double rotation = terminal.theta;
             terminal = drawer.draw(graphics2D, (int) origin.getX(), (int) origin.getY(), rotation);
-            System.out.println(terminal.position.getX() + ", " + terminal.position.getY());
         }
     }
 
