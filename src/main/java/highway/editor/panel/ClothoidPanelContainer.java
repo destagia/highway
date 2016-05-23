@@ -42,6 +42,8 @@ public class ClothoidPanelContainer implements ComponentEditor {
         panel.add(radiusField);
 
         typeField = new JComboBox<Clothoid.Type>();
+        typeField.setSize(350, 30);
+        typeField.setMaximumSize(new Dimension(350, 30));
         Clothoid.Type[] types = Clothoid.Type.values();
         for (int i = 0; i < types.length; i++) {
             typeField.addItem(types[i]);

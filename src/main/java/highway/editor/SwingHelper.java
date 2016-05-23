@@ -14,5 +14,4 @@ public class SwingHelper {
         field.setMaximumSize(new Dimension(350, 30));
         return field;
     }
-
 }

@@ -98,12 +98,21 @@ public class Clothoid {
         return rotated;
     }
 
+    public double getNextTheta() {
+        next();
+        return last1Position.minus(last2Position).getTheta();
+    }
+
     private boolean shouldBeFlipOnY() {
         return type == Type.LeftDown || type == Type.RightUp;
     }
 
     private boolean isUpType() {
         return type == Type.LeftUp || type == Type.RightUp;
+    }
+
+    private boolean isRightType() {
+        return type == Type.RightUp || type == Type.RightDown;
     }
 
     private void initialize() {

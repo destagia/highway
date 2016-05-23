@@ -25,12 +25,11 @@ public class ClothoidDrawer extends Drawer {
 
         while (clothoid.hasNext()) {
             Vector2 point = clothoid.next();
+            System.out.println(point);
             drawLine((int)prevPoint.getX() + originX, (int)prevPoint.getY() + originY, (int)point.getX() + originX, (int)point.getY() + originY);
             prevPoint = point;
         }
 
-        Vector2 additional = clothoid.next();
-
-        return additional.minus(prevPoint).getTheta();
+        return clothoid.getNextTheta();
     }
 }
