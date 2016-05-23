@@ -25,8 +25,6 @@ public class Clothoid {
     }
 
     public Clothoid(double targetRadius, double targetLength, Type type) {
-        System.out.println("Initialize Clothoid!");
-
         TARGET_RADIUS = targetRadius;
         TARGET_LENGTH = targetLength;
         TYPE = type;
@@ -78,6 +76,8 @@ public class Clothoid {
     private Vector2 calculateNext() {
         boolean hasNext = hasNext();
 
+        l = l + ΔL;
+
         if (!hasNext && !isUpType()) {
             Vector2 forward = last1Position.minus(last2Position).getNormalized();
             last2Position = last1Position;
@@ -115,8 +115,6 @@ public class Clothoid {
 
         last2Position = last1Position;
         last1Position = new Vector2(x, y);
-
-        l = l + ΔL;
 
         return last1Position;
     }
