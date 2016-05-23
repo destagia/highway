@@ -14,9 +14,9 @@ public class LineDrawer extends Drawer {
     }
 
     @Override
-    public double draw(int originX, int originY)
+    public double draw()
     {
-        drawLine(originX, originY, originX + length, originY);
+        drawLine(0, 0, length, 0);
         return 0.0;
     }
 }

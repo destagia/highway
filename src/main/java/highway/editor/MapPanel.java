@@ -21,7 +21,9 @@ public class MapPanel extends JPanel {
         graphics2D.setRenderingHint(
                 RenderingHints.KEY_ANTIALIASING,
                 RenderingHints.VALUE_ANTIALIAS_ON);
-                */
+
+        graphics2D.setStroke(new BasicStroke(10));
+        */
 
         controller.onPaint(graphics2D);
     }

@@ -19,13 +19,13 @@ public class ClothoidDrawer extends Drawer {
     }
 
     @Override
-    protected double draw(int originX, int originY) {
+    protected double draw() {
         Clothoid clothoid = new Clothoid(radius, length, type);
         Vector2 prevPoint = Vector2.ZERO;
 
         while (clothoid.hasNext()) {
             Vector2 point = clothoid.next();
-            drawLine((int)prevPoint.getX() + originX, (int)prevPoint.getY() + originY, (int)point.getX() + originX, (int)point.getY() + originY);
+            drawLine((int)prevPoint.getX(), (int)prevPoint.getY(), (int)point.getX(), (int)point.getY());
             prevPoint = point;
         }
 

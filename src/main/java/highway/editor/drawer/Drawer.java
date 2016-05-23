@@ -3,7 +3,6 @@ import highway.util.Vector2;
 
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.Vector;
 
 /**
  * Created by shohei.miyashita on 5/23/16.
@@ -16,15 +15,14 @@ public abstract class Drawer {
         Vector2 origin = new Vector2(x, y);
         Vector2 terminal = origin;
 
-        double nextRotation = draw(x, y) + rotation;
+        double nextRotation = draw() + rotation;
 
         for (Path path : paths) {
-            Vector2 from = origin.plus(path.getOrigin().minus(origin).getRotated(rotation));
+            Vector2 from = origin.plus(path.getOrigin().getRotated(rotation));
             int fromX = (int)from.getX();
             int fromY = (int)from.getY();
 
-            Vector2 to = origin.plus(path.getDestination().minus(origin).getRotated(rotation));
-
+            Vector2 to = origin.plus(path.getDestination().getRotated(rotation));
             int toX = (int)to.getX();
             int toY = (int)to.getY();
 
@@ -40,7 +38,7 @@ public abstract class Drawer {
         paths.add(new Path(fromX, fromY, toX, toY));
     }
 
-    protected abstract double draw(int originX, int originY);
+    protected abstract double draw();
 
     private class Path {
         private Vector2 origin;
