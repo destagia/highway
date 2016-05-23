@@ -1,31 +1,60 @@
 package highway.util;
 
 
+import java.util.Vector;
+
 /**
  * クロソイド曲線を表現するクラス
  * Created by shohei.miyashita on 5/20/16.
  */
 public class Clothoid {
 
+    public enum Type {
+        LeftUp, RightUp, LeftDown, RightDown
+    }
+
     private final double targetRadius;
     private final double targetLength;
+    private final Type type;
 
     public Clothoid(double targetRadius, double targetLength) {
         this.targetRadius = targetRadius;
         this.targetLength = targetLength;
+        this.type = Type.LeftUp;
+        initialize();
+    }
+
+    public Clothoid(double targetRadius, double targetLength, Type type) {
+        this.targetRadius = targetRadius;
+        this.targetLength = targetLength;
+        this.type = type;
+        initialize();
     }
 
     public boolean hasNext() {
-        return l < targetLength;
+        if (isUpType()) {
+            return l < targetLength;
+        } else {
+            return l > 0;
+        }
     }
 
     private double l;
+    private Vector2 origin;
+    private Double rotation;
 
-    public Vector2 next() {
+    private Vector2 last1Position;
+    private Vector2 last2Position;
 
+    private Vector2 internalNext() {
         final double A = Math.sqrt(targetRadius * targetLength);
 
-        l += 5;
+        head();
+
+        if (!hasNext() && !isUpType()) {
+            Vector2 forward = last1Position.minus(last2Position).getNormalized();
+            return last1Position.plus(forward.multiply(Math.abs(l)));
+        }
 
         double r = A * A / l;
         double τ = l / (2 * r);
@@ -52,7 +81,54 @@ public class Clothoid {
 
         y *= -A * τ * Math.sqrt(2 * τ);
 
-        return new Vector2(x, y);
+        last2Position = last1Position;
+        last1Position = new Vector2(x, y);
+
+        return last1Position;
+    }
+
+    public Vector2 next() {
+        Vector2 position = internalNext().minus(origin);
+        Vector2 rotated = position.getRotated(rotation);
+
+        if (shouldBeFlipOnY()) {
+            return new Vector2(rotated.getX(), -rotated.getY());
+        }
+
+        return rotated;
+    }
+
+    private boolean shouldBeFlipOnY() {
+        return type == Type.LeftDown || type == Type.RightUp;
+    }
+
+    private boolean isUpType() {
+        return type == Type.LeftUp || type == Type.RightUp;
+    }
+
+    private void initialize() {
+        initializeL();
+        Vector2 first = internalNext();
+        Vector2 second = internalNext();
+        rotation = new Double(second.minus(first).getTheta());
+        origin = first;
+        initializeL();
+    }
+
+    private void initializeL() {
+        if (isUpType()) {
+            l = 0;
+        } else {
+            l = targetLength;
+        }
+    }
+
+    private void head() {
+        if (isUpType()) {
+            l += 5;
+        } else {
+            l -= 5;
+        }
     }
 
 }

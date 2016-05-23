@@ -3,8 +3,11 @@ package highway.editor.panel;
 import highway.editor.MapController;
 import highway.editor.Repainter;
 import highway.editor.SwingHelper;
+import highway.util.Clothoid;
 
 import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -20,6 +23,7 @@ public class ClothoidPanelContainer implements ComponentEditor {
 
     private JTextField radiusField;
     private JTextField lengthField;
+    private JComboBox<Clothoid.Type> typeField;
 
     public ClothoidPanelContainer(final MapController controller) {
         this.controller = controller;
@@ -30,14 +34,19 @@ public class ClothoidPanelContainer implements ComponentEditor {
         panel.setLayout(boxlayout);
 
         panel.add(new JLabel("長さ"));
-
         lengthField = SwingHelper.createTextField();
         panel.add(lengthField);
 
         panel.add(new JLabel("半径"));
-
         radiusField = SwingHelper.createTextField();
         panel.add(radiusField);
+
+        typeField = new JComboBox<Clothoid.Type>();
+        Clothoid.Type[] types = Clothoid.Type.values();
+        for (int i = 0; i < types.length; i++) {
+            typeField.addItem(types[i]);
+        }
+        panel.add(typeField);
     }
 
     public void add(Component component) {
@@ -51,6 +60,7 @@ public class ClothoidPanelContainer implements ComponentEditor {
     public void onApply() {
         int length = Integer.parseInt(lengthField.getText());
         int radius = Integer.parseInt(radiusField.getText());
-        controller.drawClothoid(radius, length);
+        Clothoid.Type type = (Clothoid.Type)typeField.getSelectedItem();
+        controller.drawClothoid(radius, length, type);
     }
 }

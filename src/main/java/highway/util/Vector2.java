@@ -49,6 +49,11 @@ public class Vector2 {
         return Math.sqrt(x * x + y * y);
     }
 
+    public Vector2 getNormalized() {
+        double magnitude = getMagnitude();
+        return new Vector2(this.x / magnitude, this.y / magnitude);
+    }
+
     public Vector2 plus(Vector2 other) {
         return new Vector2(this.x + other.x, this.y + other.y);
     }

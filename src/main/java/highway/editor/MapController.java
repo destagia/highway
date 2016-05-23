@@ -4,6 +4,7 @@ import highway.editor.drawer.ClothoidDrawer;
 import highway.editor.drawer.Drawer;
 import highway.editor.drawer.LineDrawer;
 import highway.editor.drawer.Terminal;
+import highway.util.Clothoid;
 import highway.util.Vector2;
 
 import java.awt.*;
@@ -33,7 +34,7 @@ public class MapController {
         repository.addDrawer(new LineDrawer(length));
     }
 
-    public void drawClothoid(double radius, double length) {
-        repository.addDrawer(new ClothoidDrawer(radius, length));
+    public void drawClothoid(double radius, double length, Clothoid.Type type) {
+        repository.addDrawer(new ClothoidDrawer(radius, length, type));
     }
 }

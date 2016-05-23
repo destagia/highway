@@ -10,15 +10,17 @@ public class ClothoidDrawer extends Drawer {
 
     private double radius;
     private double length;
+    private Clothoid.Type type;
 
-    public ClothoidDrawer(double targetRadius, double targetLength) {
+    public ClothoidDrawer(double targetRadius, double targetLength, Clothoid.Type type) {
         radius = targetRadius;
         length = targetLength;
+        this.type = type;
     }
 
     @Override
     protected double draw(int originX, int originY) {
-        Clothoid clothoid = new Clothoid(radius, length);
+        Clothoid clothoid = new Clothoid(radius, length, type);
         Vector2 prevPoint = Vector2.ZERO;
 
         while (clothoid.hasNext()) {
